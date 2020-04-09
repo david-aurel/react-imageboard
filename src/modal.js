@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function Modal({ photo, show, closeModal }) {
+function Modal({ photo, show, closeModal, history }) {
     const [render, setRender] = useState(show);
 
     useEffect(() => {
@@ -11,7 +11,10 @@ function Modal({ photo, show, closeModal }) {
     }, [show]);
 
     const onAnimationEnd = () => {
-        if (!show) setRender(false);
+        if (!show) {
+            setRender(false);
+            history.push('/');
+        }
     };
 
     return (

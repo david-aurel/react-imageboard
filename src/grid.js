@@ -48,7 +48,6 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
 
     function closeModal() {
         setShowModal(false);
-        history.push('/');
     }
 
     if (!fetchedPhotos) {
@@ -99,6 +98,7 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
                     photo={photos[selected]}
                     show={showModal}
                     closeModal={closeModal}
+                    history={history}
                 />
             </Route>
         </div>
