@@ -76,9 +76,10 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
         );
     });
     return (
-        <div className='grid' onScroll={(e) => handleScroll(e.target)}>
-            {mappedPhotos}
-            {/* <Route
+        <>
+            <div className='grid' onScroll={(e) => handleScroll(e.target)}>
+                {mappedPhotos}
+                {/* <Route
                 render={({ location }) => (
                     <TransitionGroup>
                         <CSSTransition
@@ -93,6 +94,7 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
                     </TransitionGroup>
                 )}
             /> */}
+            </div>
             <Route path='/:photo'>
                 <Modal
                     photo={photos[selected]}
@@ -101,7 +103,7 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
                     history={history}
                 />
             </Route>
-        </div>
+        </>
     );
 }
 

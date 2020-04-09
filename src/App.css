@@ -18,6 +18,10 @@
     padding: calc(var(--gap) * 2) var(--gap);
 }
 
+.fas {
+    color: black;
+}
+
 /* navbar */
 nav {
     padding-left: var(--gap);
@@ -34,7 +38,7 @@ nav {
     grid-template-columns: 1fr;
 }
 
-img {
+.grid img {
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -60,19 +64,79 @@ img {
     right: 0;
     bottom: 0;
     left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
 }
 
-@keyframes fadeIn {
+.modalImg {
+    height: 200px;
+    flex-grow: 1;
+    margin-bottom: 10px;
+    object-fit: contain;
+}
+
+.authorCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.authorCard img {
+    max-height: 50px;
+    max-width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    margin-right: 50px;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.links {
+    display: flex;
+    justify-content: space-around;
+    width: 100px;
+}
+
+@keyframes modalIn {
     from {
         transform: scale(0.8);
+        opacity: 0;
     }
     to {
         transform: scale(1);
+        opacity: 1;
     }
 }
-@keyframes fadeOut {
+@keyframes modalOut {
     from {
-        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes backgroundIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.5;
+    }
+}
+@keyframes backgroundOut {
+    from {
+        opacity: 0.5;
     }
     to {
         opacity: 0;
@@ -106,5 +170,17 @@ img {
         bottom: 50px;
         right: 50px;
         left: 50px;
+        border-radius: 10px;
+        z-index: 1;
+    }
+
+    .background {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: black;
+        opacity: 0.5;
     }
 }
