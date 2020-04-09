@@ -43,21 +43,19 @@ function Grid({ fetchedPhotos, fetchMore }) {
     console.log('grid rerendered', photos);
     const mappedPhotos = photos.map((photo, i) => {
         return (
-            <div key={i} className='photoCard'>
-                <img
-                    src={photo.urls.small}
-                    className={`${photo.orientation} ${
-                        photo.popular ? 'big' : 'small'
-                    }`}
-                    alt={photo.alt_description}
-                />
+            <div
+                key={i}
+                className={`photoCard ${photo.orientation} ${
+                    photo.popular ? 'big' : 'small'
+                }`}
+            >
+                <img src={photo.urls.small} alt={photo.alt_description} />
             </div>
         );
     });
     return (
         <div className='grid' onScroll={(e) => handleScroll(e.target)}>
             {mappedPhotos}
-            <button onClick={() => fetchMore()}>Fetch more</button>
         </div>
     );
 }

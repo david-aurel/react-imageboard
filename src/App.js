@@ -8,7 +8,7 @@ import Grid from './grid';
 function App() {
     const [photos, setPhotos] = useState('');
     const [page, setPage] = useState(1);
-    const unsplashEndpoint = `https://api.unsplash.com/photos/?page=${page}&client_id=${secrets.accessKey}`;
+    const unsplashEndpoint = `https://api.unsplash.com/photos/?page=${page}&per_page=10&client_id=${secrets.accessKey}`;
 
     async function fetchMore() {
         setPage(page + 1);
