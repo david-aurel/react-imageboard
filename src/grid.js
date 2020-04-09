@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import Modal from './modal';
 
-function Grid({ fetchedPhotos, fetchMore }) {
+function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
     const [photos, setPhotos] = useState([]);
+    const [selected, setSelected] = useState();
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         if (fetchedPhotos) {
             addOrientation(fetchedPhotos);
             addPopularity(fetchedPhotos);
             setPhotos([...photos, ...fetchedPhotos]);
+            if (
+                document.querySelector('.grid').scrollHeight <
+                document.querySelector('#root').clientHeight
+            ) {
+                fetchMore();
+            }
         }
     }, [fetchedPhotos]);
 
@@ -31,16 +42,20 @@ function Grid({ fetchedPhotos, fetchMore }) {
     function handleScroll(e) {
         const bottom = e.scrollHeight - e.scrollTop === e.clientHeight;
         if (bottom) {
-            console.log('bottom');
             fetchMore();
         }
     }
 
-    if (!photos) {
+    function closeModal() {
+        setShowModal(false);
+        history.push('/');
+    }
+
+    if (!fetchedPhotos) {
         return <p className='loading'>Loading...</p>;
     }
 
-    console.log('grid rerendered', photos);
+    // console.log('grid rerendered', photos);
     const mappedPhotos = photos.map((photo, i) => {
         return (
             <div
@@ -49,13 +64,43 @@ function Grid({ fetchedPhotos, fetchMore }) {
                     photo.popular ? 'big' : 'small'
                 }`}
             >
-                <img src={photo.urls.small} alt={photo.alt_description} />
+                <Link
+                    to={`/photo-${i}`}
+                    onClick={() => {
+                        setSelected(i);
+                        setShowModal(true);
+                    }}
+                >
+                    <img src={photo.urls.small} alt={photo.alt_description} />
+                </Link>
             </div>
         );
     });
     return (
         <div className='grid' onScroll={(e) => handleScroll(e.target)}>
             {mappedPhotos}
+            {/* <Route
+                render={({ location }) => (
+                    <TransitionGroup>
+                        <CSSTransition
+                            key={location.key}
+                            timeout={500}
+                            classNames='fade'
+                        >
+                            <Route path='/:photo'>
+                                <Modal photo={photos[selected]} />
+                            </Route>
+                        </CSSTransition>
+                    </TransitionGroup>
+                )}
+            /> */}
+            <Route path='/:photo'>
+                <Modal
+                    photo={photos[selected]}
+                    show={showModal}
+                    closeModal={closeModal}
+                />
+            </Route>
         </div>
     );
 }

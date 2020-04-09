@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 import secrets from './secrets.json';
-import Navbar from './navbar';
 import Grid from './grid';
 
 function App() {
@@ -20,10 +20,18 @@ function App() {
         })();
     }, [page]);
     return (
-        <>
-            <Navbar />
-            <Grid fetchedPhotos={photos} fetchMore={fetchMore} />
-        </>
+        <Router>
+            <Route
+                path='/'
+                render={(routeProps) => (
+                    <Grid
+                        fetchedPhotos={photos}
+                        fetchMore={fetchMore}
+                        {...routeProps}
+                    />
+                )}
+            ></Route>
+        </Router>
     );
 }
 

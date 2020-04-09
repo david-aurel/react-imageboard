@@ -1,18 +1,26 @@
+/* general */
 * {
     box-sizing: border-box;
     margin: 0;
     font-family: sans-serif;
 }
+:root {
+    --gap: 5px;
+    --hoverScale: 1.025;
+    --colSize: 200px;
+    --rowSize: 150px;
+}
 
 #root {
     display: flex;
     flex-direction: column;
-    height: 95vh;
+    height: 100vh;
+    padding: calc(var(--gap) * 2) var(--gap);
 }
 
 /* navbar */
 nav {
-    padding: 10px;
+    padding-left: var(--gap);
     font-size: 1.5em;
 }
 
@@ -22,7 +30,7 @@ nav {
     overflow: scroll;
     flex-grow: 1;
     display: grid;
-    /* grid-gap: 5px; */
+    /* grid-gap: var(--gap); */
     grid-template-columns: 1fr;
 }
 
@@ -30,23 +38,53 @@ img {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    padding: 2.5px;
+    padding: calc(var(--gap) / 2);
 }
 
 .photoCard {
-    padding: 2.5px;
+    padding: calc(var(--gap) / 2);
     transition: 200ms;
 }
 
 .photoCard:hover {
-    transform: scale(1.025);
-    padding: 2.5px;
+    transform: scale(var(--hoverScale));
+    padding: calc(var(--gap) / 2);
     transition: transform 200ms;
 }
+
+/* modal */
+.modal {
+    position: absolute;
+    background: white;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        transform: scale(0.8);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+@keyframes fadeOut {
+    from {
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* media queries */
 @media (min-width: 400px) {
+    /* grid */
     .grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        grid-auto-rows: 150px;
+        grid-template-columns: repeat(auto-fit, minmax(var(--colSize), 1fr));
+        grid-auto-rows: var(--rowSize);
         grid-auto-flow: dense;
     }
     .horizontal {
@@ -56,9 +94,17 @@ img {
         grid-row: span 2;
     }
     /* .big.vertical {
-        grid-area: span 4 / span 2;
-    } */
+      grid-area: span 4 / span 2;
+  } */
     .big.horizontal {
         grid-area: span 2 / span 2;
+    }
+
+    /* modal */
+    .modal {
+        top: 50px;
+        bottom: 50px;
+        right: 50px;
+        left: 50px;
     }
 }
