@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Modal({ photo, show, closeModal, history, setFocus }) {
+function Modal({ photo, show, closeModal, setFocus, history }) {
     const [render, setRender] = useState(show);
 
     useEffect(() => {
@@ -33,6 +33,7 @@ function Modal({ photo, show, closeModal, history, setFocus }) {
                             show ? 'backgroundIn' : 'backgroundOut'
                         } 300ms`,
                     }}
+                    onClick={closeModal}
                 />
                 <div
                     className='modal'

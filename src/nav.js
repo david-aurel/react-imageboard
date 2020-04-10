@@ -4,6 +4,7 @@ function Nav({ showBig, handleShowBig }) {
     const [imgSize, setImgSize] = useState(1);
     const [gapSize, setGapSize] = useState(5);
 
+    // changing CSS root variables
     function handleImgSize(val) {
         document.documentElement.style.setProperty('--size', imgSize + val);
         setImgSize(imgSize + val);
