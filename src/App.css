@@ -10,6 +10,7 @@
     --hoverScale: 1.025;
     --colSize: 200px;
     --rowSize: 150px;
+    --size: 1;
 }
 
 #root {
@@ -153,12 +154,30 @@
     }
 }
 
+/* settings */
+nav {
+    min-height: 30px;
+    background: white;
+    transition: 300ms;
+}
+.expanded {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: 300ms;
+    height: 50vh;
+}
+
 /* media queries */
 @media (min-width: 400px) {
     /* grid */
     .grid {
-        grid-template-columns: repeat(auto-fit, minmax(var(--colSize), 1fr));
-        grid-auto-rows: var(--rowSize);
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(calc(var(--colSize) * var(--size)), 1fr)
+        );
+        grid-auto-rows: calc(var(--rowSize) * var(--size));
         grid-auto-flow: dense;
     }
     .horizontal {

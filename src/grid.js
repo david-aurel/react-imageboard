@@ -2,16 +2,20 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Route, Link } from 'react-router-dom';
 import Modal from './modal';
 
-function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
+function Grid({ fetchedPhotos, fetchMore, loadModal, history, err, showBig }) {
     const [photos, setPhotos] = useState([]);
     const [selected, setSelected] = useState();
     const [showModal, setShowModal] = useState(false);
     const ref = useRef(null);
 
     useEffect(() => {
+        console.log(showBig);
+
         if (fetchedPhotos) {
             addOrientation(fetchedPhotos);
-            addPopularity(fetchedPhotos);
+            if (showBig) {
+                addPopularity(fetchedPhotos);
+            }
             setPhotos([...photos, ...fetchedPhotos]);
             if (
                 document.querySelector('.grid').scrollHeight <
@@ -46,28 +50,18 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
             fetchMore();
         }
     }
-
     function closeModal() {
         setShowModal(false);
     }
-
     function setFocus() {
         ref.current.children[selected].children[0].focus();
     }
-
-    if (!fetchedPhotos) {
-        if (err) {
-            return <p className='error'>{err.message} :(</p>;
-        }
-        return <p className='loading'>Loading...</p>;
-    }
-
     const mappedPhotos = photos.map((photo, i) => {
         return (
             <div
                 key={i}
                 className={`photoCard ${photo.orientation} ${
-                    photo.popular ? 'big' : 'small'
+                    photo.popular && showBig ? 'big' : 'small'
                 }`}
             >
                 <Link
@@ -76,33 +70,41 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
                         setSelected(i);
                         setShowModal(true);
                     }}
-                    tabIndex={showModal ? -1 : 0}
+                    tabIndex={showModal ? -1 : 2}
                 >
                     <img src={photo.urls.small} alt={photo.alt_description} />
                 </Link>
             </div>
         );
     });
-    return (
-        <>
-            <div
-                className='grid'
-                onScroll={(e) => handleScroll(e.target)}
-                ref={ref}
-            >
-                {mappedPhotos}
-            </div>
-            <Route path='/:photo'>
-                <Modal
-                    photo={photos[selected]}
-                    show={showModal}
-                    closeModal={closeModal}
-                    history={history}
-                    setFocus={setFocus}
-                />
-            </Route>
-        </>
-    );
+
+    if (!fetchedPhotos) {
+        if (err) {
+            return <p className='error'>{err.message} :(</p>;
+        }
+        return <p className='loading'>Loading...</p>;
+    } else {
+        return (
+            <>
+                <div
+                    className='grid'
+                    onScroll={(e) => handleScroll(e.target)}
+                    ref={ref}
+                >
+                    {mappedPhotos}
+                </div>
+                <Route path='/:photo'>
+                    <Modal
+                        photo={photos[selected]}
+                        show={showModal}
+                        closeModal={closeModal}
+                        history={history}
+                        setFocus={setFocus}
+                    />
+                </Route>
+            </>
+        );
+    }
 }
 
 export default Grid;
