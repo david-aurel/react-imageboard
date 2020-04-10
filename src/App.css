@@ -6,7 +6,7 @@
 }
 
 :root {
-    --gap: 5px;
+    --gap: 7px;
     --hoverScale: 1.025;
     --colSize: 200px;
     --rowSize: 150px;
@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: calc(var(--gap) * 2) var(--gap);
+    padding: calc(var(--gap) * 2) var(--gap) 0 var(--gap);
 }
 
 .fas {
@@ -39,6 +39,7 @@
     width: 100%;
     object-fit: cover;
     padding: calc(var(--gap) / 2);
+    border-radius: 10px;
 }
 
 .photoCard {
@@ -156,17 +157,7 @@
 
 /* settings */
 nav {
-    min-height: 30px;
-    background: white;
-    transition: 300ms;
-}
-.expanded {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transition: 300ms;
-    height: 50vh;
+    display: none;
 }
 
 /* media queries */
@@ -210,5 +201,45 @@ nav {
         left: 0;
         background: black;
         opacity: 0.5;
+    }
+
+    /* settings */
+    nav {
+        display: flex;
+        justify-content: center;
+        min-height: 30px;
+        background: white;
+        transition: 300ms;
+        margin: 15px;
+    }
+
+    nav div {
+        display: flex;
+        align-items: center;
+        margin: 5px 15px;
+    }
+
+    nav div p {
+        margin: 0 3px;
+    }
+
+    nav .popular p {
+        margin-right: 10px;
+    }
+
+    nav div button {
+        border: none;
+        cursor: pointer;
+    }
+
+    nav .fa-arrow-up:hover {
+        transform: translateY(-2px);
+    }
+    nav .fa-arrow-down:hover {
+        transform: translateY(2px);
+    }
+
+    nav div i {
+        font-size: 1rem;
     }
 }

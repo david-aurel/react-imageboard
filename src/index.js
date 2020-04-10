@@ -44,7 +44,7 @@ function App() {
                     />
                 )}
             ></Route>
-            <Nav handleShowBig={handleShowBig} />
+            <Nav showBig={showBig} handleShowBig={handleShowBig} />
         </Router>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Nav({ handleShowBig }) {
+function Nav({ showBig, handleShowBig }) {
     const [imgSize, setImgSize] = useState(1);
     const [gapSize, setGapSize] = useState(5);
 
@@ -17,14 +17,32 @@ function Nav({ handleShowBig }) {
     }
     return (
         <nav>
-            Image Size
-            <button onClick={() => handleImgSize(-0.1)}>-</button>
-            <button onClick={() => handleImgSize(0.1)}>+</button>
-            Gap Size
-            <button onClick={() => handleGapSize(-2)}>-</button>
-            <button onClick={() => handleGapSize(2)}>+</button>
-            Make popular Images big
-            <input type='checkbox' checked onChange={handleShowBig} />
+            <div className='imageSize'>
+                <button onClick={() => handleImgSize(-0.1)}>
+                    <i className='fas fa-arrow-down'></i>
+                </button>
+                <p>Size</p>
+                <button onClick={() => handleImgSize(0.1)}>
+                    <i className='fas fa-arrow-up'></i>
+                </button>
+            </div>
+            <div className='gapSize'>
+                <button onClick={() => handleGapSize(-2)}>
+                    <i className='fas fa-arrow-down'></i>
+                </button>
+                <p>Spacing</p>
+                <button onClick={() => handleGapSize(2)}>
+                    <i className='fas fa-arrow-up'></i>
+                </button>
+            </div>
+            <div className='popular'>
+                <p>Highlight Popular</p>
+                <input
+                    type='checkbox'
+                    checked={showBig}
+                    onChange={handleShowBig}
+                />
+            </div>
         </nav>
     );
 }

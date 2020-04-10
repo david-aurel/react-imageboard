@@ -9,8 +9,6 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err, showBig }) {
     const ref = useRef(null);
 
     useEffect(() => {
-        console.log(showBig);
-
         if (fetchedPhotos) {
             addOrientation(fetchedPhotos);
             if (showBig) {
@@ -45,7 +43,7 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err, showBig }) {
         }
     }
     function handleScroll(e) {
-        const bottom = e.scrollHeight - e.scrollTop === e.clientHeight;
+        const bottom = e.scrollHeight - e.scrollTop <= e.clientHeight + 50;
         if (bottom) {
             fetchMore();
         }
