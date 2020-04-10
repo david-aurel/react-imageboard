@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Modal({ photo, show, closeModal, history }) {
+function Modal({ photo, show, closeModal, history, setFocus }) {
     const [render, setRender] = useState(show);
 
     useEffect(() => {
@@ -9,12 +9,19 @@ function Modal({ photo, show, closeModal, history }) {
         }
     }, [show]);
 
-    const onAnimationEnd = () => {
+    function onAnimationEnd() {
         if (!show) {
             setRender(false);
             history.push('/');
         }
-    };
+    }
+
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            closeModal();
+            setFocus();
+        }
+    }
 
     return (
         render && (
@@ -33,12 +40,14 @@ function Modal({ photo, show, closeModal, history }) {
                         animation: `${show ? 'modalIn' : 'modalOut'} 300ms`,
                     }}
                     onAnimationEnd={onAnimationEnd}
-                    onClick={closeModal}
                 >
                     <img
                         src={photo.urls.regular}
                         alt={photo.alt_description}
                         className='modalImg'
+                        onClick={closeModal}
+                        onKeyPress={handleKeyPress}
+                        tabIndex='0'
                     />
                     <div className='authorCard'>
                         <a

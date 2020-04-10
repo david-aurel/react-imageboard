@@ -50,6 +50,12 @@
     padding: calc(var(--gap) / 2);
     transition: transform 200ms;
 }
+.author:hover {
+    transform: scale(1.025);
+}
+.links a:hover {
+    transform: scale(1.1);
+}
 
 .loading,
 .error {

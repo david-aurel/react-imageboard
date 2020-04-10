@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { Route, Link } from 'react-router-dom';
 import Modal from './modal';
 
 function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
     const [photos, setPhotos] = useState([]);
     const [selected, setSelected] = useState();
     const [showModal, setShowModal] = useState(false);
+    const ref = useRef(null);
+
     useEffect(() => {
         if (fetchedPhotos) {
             addOrientation(fetchedPhotos);
@@ -18,7 +20,7 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
                 fetchMore();
             }
         }
-    }, [fetchedPhotos]);
+    }, [fetchedPhotos, selected]);
 
     function addOrientation(photos) {
         if (photos) {
@@ -49,6 +51,10 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
         setShowModal(false);
     }
 
+    function setFocus() {
+        ref.current.children[selected].children[0].focus();
+    }
+
     if (!fetchedPhotos) {
         if (err) {
             return <p className='error'>{err.message} :(</p>;
@@ -70,6 +76,7 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
                         setSelected(i);
                         setShowModal(true);
                     }}
+                    tabIndex={showModal ? -1 : 0}
                 >
                     <img src={photo.urls.small} alt={photo.alt_description} />
                 </Link>
@@ -78,7 +85,11 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
     });
     return (
         <>
-            <div className='grid' onScroll={(e) => handleScroll(e.target)}>
+            <div
+                className='grid'
+                onScroll={(e) => handleScroll(e.target)}
+                ref={ref}
+            >
                 {mappedPhotos}
             </div>
             <Route path='/:photo'>
@@ -87,6 +98,7 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
                     show={showModal}
                     closeModal={closeModal}
                     history={history}
+                    setFocus={setFocus}
                 />
             </Route>
         </>
