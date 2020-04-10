@@ -7,17 +7,22 @@ import secrets from './secrets.json';
 import Grid from './grid';
 
 function App() {
-    const [photos, setPhotos] = useState('');
+    const [photos, setPhotos] = useState();
     const [page, setPage] = useState(1);
+    const [err, setErr] = useState();
     const unsplashEndpoint = `https://api.unsplash.com/photos/?page=${page}&per_page=10&client_id=${secrets.accessKey}`;
 
-    async function fetchMore() {
+    function fetchMore() {
         setPage(page + 1);
     }
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get(unsplashEndpoint);
-            setPhotos(data);
+            try {
+                const { data } = await axios.get(unsplashEndpoint);
+                setPhotos(data);
+            } catch (err) {
+                setErr(err);
+            }
         })();
     }, [page]);
     return (
@@ -28,6 +33,7 @@ function App() {
                     <Grid
                         fetchedPhotos={photos}
                         fetchMore={fetchMore}
+                        err={err}
                         {...routeProps}
                     />
                 )}

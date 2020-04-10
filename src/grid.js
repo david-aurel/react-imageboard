@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Modal from './modal';
 
-function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
+function Grid({ fetchedPhotos, fetchMore, loadModal, history, err }) {
     const [photos, setPhotos] = useState([]);
     const [selected, setSelected] = useState();
     const [showModal, setShowModal] = useState(false);
@@ -51,10 +50,12 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
     }
 
     if (!fetchedPhotos) {
+        if (err) {
+            return <p className='error'>{err.message} :(</p>;
+        }
         return <p className='loading'>Loading...</p>;
     }
 
-    // console.log('grid rerendered', photos);
     const mappedPhotos = photos.map((photo, i) => {
         return (
             <div
@@ -79,21 +80,6 @@ function Grid({ fetchedPhotos, fetchMore, loadModal, history }) {
         <>
             <div className='grid' onScroll={(e) => handleScroll(e.target)}>
                 {mappedPhotos}
-                {/* <Route
-                render={({ location }) => (
-                    <TransitionGroup>
-                        <CSSTransition
-                            key={location.key}
-                            timeout={500}
-                            classNames='fade'
-                        >
-                            <Route path='/:photo'>
-                                <Modal photo={photos[selected]} />
-                            </Route>
-                        </CSSTransition>
-                    </TransitionGroup>
-                )}
-            /> */}
             </div>
             <Route path='/:photo'>
                 <Modal

@@ -7,7 +7,6 @@ function Modal({ photo, show, closeModal, history }) {
         if (show) {
             setRender(true);
         }
-        console.log(photo);
     }, [show]);
 
     const onAnimationEnd = () => {

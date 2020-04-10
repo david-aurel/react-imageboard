@@ -4,6 +4,7 @@
     margin: 0;
     font-family: sans-serif;
 }
+
 :root {
     --gap: 5px;
     --hoverScale: 1.025;
@@ -20,12 +21,6 @@
 
 .fas {
     color: black;
-}
-
-/* navbar */
-nav {
-    padding-left: var(--gap);
-    font-size: 1.5em;
 }
 
 /* grid */
@@ -54,6 +49,15 @@ nav {
     transform: scale(var(--hoverScale));
     padding: calc(var(--gap) / 2);
     transition: transform 200ms;
+}
+
+.loading,
+.error {
+    margin: auto;
+}
+
+.error {
+    color: #f44336;
 }
 
 /* modal */
@@ -155,7 +159,7 @@ nav {
         grid-area: span 1 / span 1;
     }
     .vertical {
-        grid-row: span 2;
+        grid-area: span 2 / span 1;
     }
     /* .big.vertical {
       grid-area: span 4 / span 2;
@@ -171,7 +175,6 @@ nav {
         right: 50px;
         left: 50px;
         border-radius: 10px;
-        z-index: 1;
     }
 
     .background {
