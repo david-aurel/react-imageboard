@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: calc(var(--gap) * 2) var(--gap) 0 var(--gap);
+    padding: calc(var(--gap) * 2) var(--gap);
 }
 
 .fas {
@@ -161,7 +161,12 @@ nav {
 }
 
 /* media queries */
-@media (min-width: 400px) {
+@media (min-width: 415px) {
+    /* general */
+    #root {
+        padding: calc(var(--gap) * 2) var(--gap) 0 var(--gap);
+    }
+
     /* grid */
     .grid {
         grid-template-columns: repeat(
