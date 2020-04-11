@@ -10,21 +10,32 @@ function App() {
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(1);
     const [err, setErr] = useState();
+    const [info, setInfo] = useState();
     const [showBig, setShowBig] = useState(true);
+    const [endpoint, setEndpoint] = useState(`/photos/?`);
 
     useEffect(() => {
         (async () => {
-            const unsplashEndpoint = `https://api.unsplash.com/photos/?page=${page}&per_page=10&client_id=${secrets.accessKey}`;
             try {
-                let { data } = await axios.get(unsplashEndpoint);
-                data = addOrientation(data);
-                data = addPopularity(data);
-                setPhotos((state) => [...state, ...data]);
+                let { data } = await axios.get(
+                    `https://api.unsplash.com${endpoint}page=${page}&per_page=10&client_id=${secrets.accessKey}`
+                );
+                if (endpoint.includes('search')) {
+                    data = data.results;
+                }
+                if (!data.length) {
+                    setInfo('no results');
+                } else {
+                    setInfo('');
+                    data = addOrientation(data);
+                    data = addPopularity(data);
+                    setPhotos((state) => [...state, ...data]);
+                }
             } catch (err) {
                 setErr(err);
             }
         })();
-    }, [page]);
+    }, [endpoint, page]);
 
     function fetchMore() {
         setPage(page + 1);
@@ -52,7 +63,17 @@ function App() {
         return photos;
     }
 
-    if (!photos.length) {
+    function handleEndpoint(val) {
+        setPage(1);
+        setPhotos([]);
+        if (val === '') {
+            setEndpoint(`/photos/?`);
+        } else {
+            setEndpoint(`/search/photos/?query=${val}&`);
+        }
+    }
+
+    if (!photos.length && !info) {
         if (err) {
             return <p className='error'>{err.message} :(</p>;
         }
@@ -67,11 +88,16 @@ function App() {
                             photos={photos}
                             fetchMore={fetchMore}
                             showBig={showBig}
+                            info={info}
                             {...routeProps}
                         />
                     )}
                 />
-                <Nav showBig={showBig} handleShowBig={handleShowBig} />
+                <Nav
+                    showBig={showBig}
+                    handleShowBig={handleShowBig}
+                    handleEndpoint={handleEndpoint}
+                />
             </Router>
         );
     }

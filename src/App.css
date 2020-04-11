@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: calc(var(--gap) * 2) var(--gap);
+    padding: calc(var(--gap) * 2) var(--gap) 0 var(--gap);
 }
 
 .fas {
@@ -157,16 +157,69 @@
 
 /* settings */
 nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+.navWrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+nav div {
+    display: flex;
+    align-items: center;
+    margin: 5px 15px;
+}
+
+nav div p {
+    margin: 0 3px;
+}
+
+nav button {
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 10px;
+    font-size: 1rem;
+}
+nav .popular p {
+    margin-right: 10px;
+}
+
+nav .fa-arrow-up:hover {
+    transform: translateY(-1px);
+}
+nav .fa-arrow-down:hover {
+    transform: translateY(1px);
+}
+nav input[type='checkbox']:hover,
+nav button:hover {
+    transform: scale(1.05);
+}
+.search {
+    width: 100%;
+}
+.search input {
+    border-radius: 30px;
+    border: 1px solid black;
+    height: 30px;
+    width: 100%;
+}
+nav nav div i {
+    font-size: 1rem;
+}
+.imageSize,
+.gapSize,
+.popular {
     display: none;
 }
 
 /* media queries */
 @media (min-width: 415px) {
-    /* general */
-    #root {
-        padding: calc(var(--gap) * 2) var(--gap) 0 var(--gap);
-    }
-
     /* grid */
     .grid {
         grid-template-columns: repeat(
@@ -209,42 +262,17 @@ nav {
     }
 
     /* settings */
-    nav {
+    .imageSize,
+    .gapSize,
+    .popular {
         display: flex;
-        justify-content: center;
-        min-height: 30px;
-        background: white;
-        transition: 300ms;
-        margin: 15px;
     }
-
-    nav div {
-        display: flex;
-        align-items: center;
-        margin: 5px 15px;
+    .search {
+        width: auto;
     }
-
-    nav div p {
-        margin: 0 3px;
-    }
-
-    nav .popular p {
-        margin-right: 10px;
-    }
-
-    nav div button {
-        border: none;
-        cursor: pointer;
-    }
-
-    nav .fa-arrow-up:hover {
-        transform: translateY(-2px);
-    }
-    nav .fa-arrow-down:hover {
-        transform: translateY(2px);
-    }
-
-    nav div i {
-        font-size: 1rem;
+    .search input {
+        height: 20px;
+        width: auto;
+        border-radius: 9px;
     }
 }

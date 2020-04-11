@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
-function Nav({ showBig, handleShowBig }) {
+function Nav({ showBig, handleShowBig, handleEndpoint }) {
     const [imgSize, setImgSize] = useState(1);
     const [gapSize, setGapSize] = useState(5);
+    const [search, setSearch] = useState('');
+    const [hidden, setHidden] = useState('');
 
     // changing CSS root variables
     function handleImgSize(val) {
@@ -18,31 +20,42 @@ function Nav({ showBig, handleShowBig }) {
     }
     return (
         <nav>
-            <div className='imageSize'>
-                <button onClick={() => handleImgSize(-0.1)}>
-                    <i className='fas fa-arrow-down'></i>
-                </button>
-                <p>Size</p>
-                <button onClick={() => handleImgSize(0.1)}>
-                    <i className='fas fa-arrow-up'></i>
-                </button>
-            </div>
-            <div className='gapSize'>
-                <button onClick={() => handleGapSize(-2)}>
-                    <i className='fas fa-arrow-down'></i>
-                </button>
-                <p>Spacing</p>
-                <button onClick={() => handleGapSize(2)}>
-                    <i className='fas fa-arrow-up'></i>
-                </button>
-            </div>
-            <div className='popular'>
-                <p>Highlight Popular</p>
-                <input
-                    type='checkbox'
-                    checked={showBig}
-                    onChange={handleShowBig}
-                />
+            <div className='navWrapper'>
+                <div className='search'>
+                    <input
+                        type='text'
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button onClick={() => handleEndpoint(search)}>
+                        Search
+                    </button>
+                </div>
+                <div className={`popular ${hidden}`}>
+                    <p>Highlight Popular</p>
+                    <input
+                        type='checkbox'
+                        checked={showBig}
+                        onChange={handleShowBig}
+                    />
+                </div>
+                <div className={`imageSize ${hidden}`}>
+                    <button onClick={() => handleImgSize(-0.1)}>
+                        <i className='fas fa-arrow-down'></i>
+                    </button>
+                    <p>Size</p>
+                    <button onClick={() => handleImgSize(0.1)}>
+                        <i className='fas fa-arrow-up'></i>
+                    </button>
+                </div>
+                <div className={`gapSize ${hidden}`}>
+                    <button onClick={() => handleGapSize(-2)}>
+                        <i className='fas fa-arrow-down'></i>
+                    </button>
+                    <p>Spacing</p>
+                    <button onClick={() => handleGapSize(2)}>
+                        <i className='fas fa-arrow-up'></i>
+                    </button>
+                </div>
             </div>
         </nav>
     );
