@@ -4,7 +4,6 @@ function Nav({ showBig, handleShowBig, handleEndpoint }) {
     const [imgSize, setImgSize] = useState(1);
     const [gapSize, setGapSize] = useState(5);
     const [search, setSearch] = useState('');
-    const [hidden, setHidden] = useState('');
 
     // changing CSS root variables
     function handleImgSize(val) {
@@ -20,17 +19,16 @@ function Nav({ showBig, handleShowBig, handleEndpoint }) {
     }
     return (
         <nav>
-            <div className='navWrapper'>
-                <div className='search'>
-                    <input
-                        type='text'
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button onClick={() => handleEndpoint(search)}>
-                        Search
-                    </button>
-                </div>
-                <div className={`popular ${hidden}`}>
+            <div className='search'>
+                <input
+                    type='text'
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder='Keywords'
+                />
+                <button onClick={() => handleEndpoint(search)}>Search</button>
+            </div>
+            <div className='settings'>
+                <div className='popular'>
                     <p>Highlight Popular</p>
                     <input
                         type='checkbox'
@@ -38,7 +36,7 @@ function Nav({ showBig, handleShowBig, handleEndpoint }) {
                         onChange={handleShowBig}
                     />
                 </div>
-                <div className={`imageSize ${hidden}`}>
+                <div className='imageSize'>
                     <button onClick={() => handleImgSize(-0.1)}>
                         <i className='fas fa-arrow-down'></i>
                     </button>
@@ -47,7 +45,7 @@ function Nav({ showBig, handleShowBig, handleEndpoint }) {
                         <i className='fas fa-arrow-up'></i>
                     </button>
                 </div>
-                <div className={`gapSize ${hidden}`}>
+                <div className='gapSize'>
                     <button onClick={() => handleGapSize(-2)}>
                         <i className='fas fa-arrow-down'></i>
                     </button>
