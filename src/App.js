@@ -32,6 +32,7 @@ function App() {
                     setPhotos((state) => [...state, ...data]);
                 }
             } catch (err) {
+                setInfo('');
                 setErr(err);
             }
         })();
@@ -73,14 +74,17 @@ function App() {
         }
     }
 
-    if (!photos.length && !info) {
-        if (err) {
-            return <p className='error'>{err.message} :(</p>;
-        }
-        return <p className='loading'>Loading...</p>;
-    } else {
-        return (
-            <Router>
+    function renderGrid() {
+        if (!photos.length) {
+            if (err) {
+                return <p className='error'>{err.message} :(</p>;
+            } else if (info) {
+                return <p className='info'>{info}</p>;
+            }
+
+            return <p className='loading'>Loading...</p>;
+        } else {
+            return (
                 <Route
                     path='/'
                     render={(routeProps) => (
@@ -93,14 +97,20 @@ function App() {
                         />
                     )}
                 />
-                <Nav
-                    showBig={showBig}
-                    handleShowBig={handleShowBig}
-                    handleEndpoint={handleEndpoint}
-                />
-            </Router>
-        );
+            );
+        }
     }
+
+    return (
+        <Router>
+            {renderGrid()}
+            <Nav
+                showBig={showBig}
+                handleShowBig={handleShowBig}
+                handleEndpoint={handleEndpoint}
+            />
+        </Router>
+    );
 }
 
 export default App;

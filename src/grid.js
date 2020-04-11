@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Route, Link } from 'react-router-dom';
 import Modal from './modal';
 
-function Grid({ photos, fetchMore, history, showBig, info }) {
+function Grid({ photos, fetchMore, history, showBig }) {
     const [selected, setSelected] = useState();
     const [showModal, setShowModal] = useState(false);
     const ref = useRef(null);
@@ -59,7 +59,7 @@ function Grid({ photos, fetchMore, history, showBig, info }) {
                 onScroll={(e) => handleScroll(e.target)}
                 ref={ref}
             >
-                {info ? <p className='info'>{info}</p> : mappedPhotos}
+                {mappedPhotos}
             </div>
 
             <Route path='/:photo'>
