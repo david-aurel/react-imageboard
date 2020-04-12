@@ -14,9 +14,7 @@ function Grid({ photos, fetchMore, history, showBig }) {
         ) {
             fetchMore();
         }
-        // TODO: Including fetchMore() causes <Grid/> to rerender 3x more than it has to?!
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [photos]);
+    }, [fetchMore, photos]);
 
     function handleScroll(e) {
         const bottom = e.scrollHeight - e.scrollTop <= e.clientHeight;
