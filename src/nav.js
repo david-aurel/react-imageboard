@@ -17,6 +17,7 @@ function Nav({ showBig, handleShowBig, handleEndpoint }) {
         );
         setGapSize(gapSize + val);
     }
+
     return (
         <nav>
             <div className='search'>

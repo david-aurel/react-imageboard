@@ -9,6 +9,7 @@ function Grid({ photos, fetchMore, history, showBig }) {
 
     useEffect(() => {
         if (
+            // not enough images to fill the screen
             document.querySelector('.grid').scrollHeight <=
             document.querySelector('.grid').clientHeight + 100
         ) {
@@ -17,8 +18,8 @@ function Grid({ photos, fetchMore, history, showBig }) {
     }, [fetchMore, photos]);
 
     function handleScroll(e) {
-        const bottom = e.scrollHeight - e.scrollTop <= e.clientHeight;
-        if (bottom) {
+        // scrolled to the bottom
+        if (e.scrollHeight - e.scrollTop <= e.clientHeight) {
             fetchMore();
         }
     }
@@ -26,8 +27,10 @@ function Grid({ photos, fetchMore, history, showBig }) {
         setShowModal(false);
     }
     function setFocus() {
+        // sets focus to where you left off after closing modal
         ref.current.children[selected].children[0].focus();
     }
+
     const mappedPhotos = photos.map((photo, i) => {
         return (
             <div

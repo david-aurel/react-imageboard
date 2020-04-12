@@ -7,30 +7,31 @@ import fetch from './fetch';
 
 function App() {
     const [photos, setPhotos] = useState([]);
-    const [page, setPage] = useState(1);
     const [endpoint, setEndpoint] = useState(`/photos/?`);
+    const [page, setPage] = useState(1);
     const [err, setErr] = useState();
     const [showBig, setShowBig] = useState(true);
 
-    const getPhotos = async (endpoint, page) => {
+    useEffect(() => {
+        getPhotos(`/photos/?`, 1);
+    }, []);
+
+    async function getPhotos(endpoint, page) {
         try {
             let data = await fetch(endpoint, page);
             setPhotos((state) => [...state, ...data]);
         } catch (err) {
             setErr(err);
         }
-    };
-    useEffect(() => {
-        getPhotos(`/photos/?`, 1);
-    }, []);
+    }
 
+    // TODO: refactor fetchMore() and handleEndpoint()
     function fetchMore() {
         setPage(page + 1);
         getPhotos(endpoint, page + 1);
     }
 
     function handleEndpoint(val) {
-        // TODO: refactor this
         setPhotos([]);
         setPage(1);
         if (val === '') {

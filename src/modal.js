@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 function Modal({ photo, show, closeModal, setFocus, history }) {
+    // seperating rendering so it doesn't unmount before animation ends
     const [render, setRender] = useState(show);
 
     useEffect(() => {

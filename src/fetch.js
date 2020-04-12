@@ -1,10 +1,10 @@
 import axios from 'axios';
-import secrets from './secrets';
+const accessKey = 'MBpZXiRtXgsPjZkmm9cD4m9fBOzYUk3-bzS6sfb5FE8';
 
 const fetch = async (endpoint, page) => {
     try {
         let { data } = await axios.get(
-            `https://api.unsplash.com${endpoint}page=${page}&per_page=10&client_id=${secrets.accessKey}`
+            `https://api.unsplash.com${endpoint}page=${page}&per_page=10&client_id=${accessKey}`
         );
         if (endpoint.includes('search')) {
             data = data.results;
