@@ -1,12 +1,12 @@
 import axios from 'axios';
-const accessKey = 'MBpZXiRtXgsPjZkmm9cD4m9fBOzYUk3-bzS6sfb5FE8';
+
+const accessKey = 'pDJOMb6T8fvKG7wQwNbUf3NZyBub943z6u71pYYLLKE';
 
 const fetch = async (endpoint, page) => {
     try {
         let { data } = await axios.get(
-            `https://api.unsplash.com${endpoint}page=${page}&per_page=50&client_id=${accessKey}`
+            `https://api.unsplash.com${endpoint}page=${page}&per_page=30&client_id=${accessKey}`
         );
-        // console.log('fetch data', data);
 
         if (endpoint.includes('search')) {
             data = data.results;

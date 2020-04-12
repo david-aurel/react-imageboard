@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Route, Link } from 'react-router-dom';
 import Modal from './modal';
 
@@ -7,22 +7,13 @@ function Grid({ photos, fetchMore, history, showBig }) {
     const [showModal, setShowModal] = useState(false);
     const ref = useRef(null);
 
-    useEffect(() => {
-        if (
-            // not enough images to fill the screen
-            document.querySelector('.grid').scrollHeight <=
-            document.querySelector('.grid').clientHeight + 100
-        ) {
-            fetchMore();
-        }
-    }, [fetchMore, photos]);
-
-    function handleScroll(e) {
-        // scrolled to the bottom
-        if (e.scrollHeight - e.scrollTop <= e.clientHeight) {
+    function infiniteScroll(e) {
+        const bottom = e.scrollHeight - e.scrollTop <= e.clientHeight;
+        if (bottom) {
             fetchMore();
         }
     }
+
     function closeModal() {
         setShowModal(false);
     }
@@ -57,8 +48,8 @@ function Grid({ photos, fetchMore, history, showBig }) {
         <>
             <div
                 className='grid'
-                onScroll={(e) => handleScroll(e.target)}
                 ref={ref}
+                onScroll={(e) => infiniteScroll(e.target)}
             >
                 {mappedPhotos}
             </div>
