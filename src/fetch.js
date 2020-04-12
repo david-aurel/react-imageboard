@@ -4,8 +4,10 @@ const accessKey = 'MBpZXiRtXgsPjZkmm9cD4m9fBOzYUk3-bzS6sfb5FE8';
 const fetch = async (endpoint, page) => {
     try {
         let { data } = await axios.get(
-            `https://api.unsplash.com${endpoint}page=${page}&per_page=10&client_id=${accessKey}`
+            `https://api.unsplash.com${endpoint}page=${page}&per_page=50&client_id=${accessKey}`
         );
+        // console.log('fetch data', data);
+
         if (endpoint.includes('search')) {
             data = data.results;
         }
@@ -31,9 +33,20 @@ function addOrientation(photos) {
 }
 
 function addPopularity(photos) {
-    const mostLikes = photos.sort((a, b) => b.likes - a.likes)[0].id;
-    photos.map((photo, i) => (photo.popular = mostLikes === photo.id));
-    return photos;
+    // unsplash already sorts lists of photos by likes
+    const factor = photos.length / 10;
+    const mostLikes = photos.sort((a, b) => b.likes - a.likes).slice(0, factor);
+    const without = photos.slice(factor);
+    let newPhotos = [];
+    mostLikes.forEach((photo) => {
+        photo.popular = true;
+    });
+    // distribute the popular ones evenly in sets of 10
+    for (let i = 0; i <= factor - 1; i++) {
+        newPhotos.push(mostLikes[i]);
+        newPhotos.push(...without.slice(i * 9, (i + 1) * 9));
+    }
+    return newPhotos;
 }
 
 export default fetch;
