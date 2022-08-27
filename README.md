@@ -2,7 +2,7 @@
 
 Welcome to my Image Board 😊
 
-The easiest way to check it out is to visit the page live at [react-imageboard.firebaseapp.com](https://react-imageboard-firebaseapp.com). Or, to get a dev environment going, clone this repo, install node modules with `npm i` and fire it up using `npm start` or `yarn start`🤖
+The easiest way to check it out is to visit the page live at [react-imageboard.firebaseapp.com](https://react-imageboard.firebaseapp.com). Or, to get a dev environment going, clone this repo, install node modules with `npm i` and fire it up using `npm start` or `yarn start`🤖
 
 ## Description
 
