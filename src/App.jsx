@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import Grid from './grid';
 import Nav from './nav';
@@ -55,17 +55,11 @@ function App() {
             return <p className='loading'>Loading...</p>;
         } else {
             return (
-                <Route
-                    path='/'
-                    render={(routeProps) => (
-                        <Grid
-                            photos={photos}
-                            fetchMore={fetchMore}
-                            showBig={showBig}
-                            err={err}
-                            {...routeProps}
-                        />
-                    )}
+                <Grid
+                    photos={photos}
+                    fetchMore={fetchMore}
+                    showBig={showBig}
+                    err={err}
                 />
             );
         }
