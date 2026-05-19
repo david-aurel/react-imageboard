@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Modal({ photo, show, closeModal, setFocus, history }) {
+function Modal({ photo, show, closeModal, setFocus, navigate }) {
     // seperating rendering so it doesn't unmount before animation ends
     const [render, setRender] = useState(show);
 
@@ -13,7 +13,7 @@ function Modal({ photo, show, closeModal, setFocus, history }) {
     function onAnimationEnd() {
         if (!show) {
             setRender(false);
-            history.push('/');
+            navigate('/');
         }
     }
 
@@ -48,7 +48,7 @@ function Modal({ photo, show, closeModal, setFocus, history }) {
                         alt={photo.alt_description}
                         className='modalImg'
                         onClick={closeModal}
-                        onKeyPress={handleKeyPress}
+                        onKeyDown={handleKeyPress}
                         tabIndex='0'
                     />
                     <div className='authorCard'>

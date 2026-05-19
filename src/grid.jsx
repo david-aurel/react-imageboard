@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Modal from './modal';
 
-function Grid({ photos, fetchMore, history, showBig }) {
+function Grid({ photos, fetchMore, showBig }) {
     const [selected, setSelected] = useState();
     const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
     const ref = useRef(null);
 
     function infiniteScroll(e) {
@@ -54,15 +55,22 @@ function Grid({ photos, fetchMore, history, showBig }) {
                 {mappedPhotos}
             </div>
 
-            <Route path='/:photo'>
-                <Modal
-                    photo={photos[selected]}
-                    show={showModal}
-                    closeModal={closeModal}
-                    history={history}
-                    setFocus={setFocus}
+            <Routes>
+                <Route
+                    path='/:photo'
+                    element={
+                        photos[selected] ? (
+                            <Modal
+                                photo={photos[selected]}
+                                show={showModal}
+                                closeModal={closeModal}
+                                navigate={navigate}
+                                setFocus={setFocus}
+                            />
+                        ) : null
+                    }
                 />
-            </Route>
+            </Routes>
         </>
     );
 }
